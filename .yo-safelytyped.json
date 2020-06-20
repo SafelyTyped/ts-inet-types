@@ -1,0 +1,13 @@
+{
+  "githubOrg": "SafelyTyped",
+  "repoName": "ts-datalocations",
+  "packageName": "@safelytyped/datalocations",
+  "copyrightHolder": "Ganbaro Digital Ltd",
+  "copyrightWebsite": "https://ganbarodigital.com",
+  "packageContactEmail": "safelytyped@ganbarodigital.com",
+  "license": "BSD-3-Clause",
+  "copyrightYear": 2020,
+  "packageDescription": "Safe types for file paths and remote data locations",
+  "npmLicense": "BSD-3-Clause",
+  "branchingModel": "gitflow"
+}

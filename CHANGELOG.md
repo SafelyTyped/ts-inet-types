@@ -26,3 +26,4 @@ The following changes have been completed, and will be included in the next tagg
 * IpPort
   - added `IpPort`
   - added `resolveIpPortToNumber()`
+  - added `resolveIpPortToString()`

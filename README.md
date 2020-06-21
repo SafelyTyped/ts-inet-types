@@ -1,19 +1,19 @@
-# Welcome To @safelytyped/datalocations!
+# Welcome To @safelytyped/ip-port!
 
 ## Introduction
 
-ADD YOUR INTRODUCTION HERE!!
+This library provides a safe `IpPort` type, and supporting helper functions.
 
 ## Quick Start
 
 ```
 # run this from your Terminal
-npm install @safelytyped/datalocations
+npm install @safelytyped/ip-port
 ```
 
 ```typescript
 // add this import to your Typescript code
-import { Value } from "@safelytyped/datalocations"
+import { IpPort } from "@safelytyped/ip-port"
 ```
 
 __VS Code users:__ once you've added a single import anywhere in your project, you'll then be able to auto-import anything else that this library exports.

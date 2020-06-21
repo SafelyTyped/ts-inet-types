@@ -1,8 +1,8 @@
 {
-  "name": "@safelytyped/datalocations",
+  "name": "@safelytyped/ip-port",
   "version": "0.0.1",
-  "description": "Safe types for file paths and remote data locations",
-  "repository": "github:SafelyTyped/ts-datalocations",
+  "description": "Safe types an IP port, for Typescript",
+  "repository": "github:SafelyTyped/ts-ip-port",
   "main": "lib/v1/index.js",
   "types": "lib/v1/index.d.ts",
   "scripts": {
@@ -18,7 +18,11 @@
   "contributors": [
     "Stuart Herbert <stuherbert@ganbarodigital.com> (https://ganbarodigital.com)"
   ],
-  "keywords": [],
+  "keywords": [
+    "ip port",
+    "safe types",
+    "typescript"
+  ],
   "files": [
     "lib/**/*",
     "CHANGELOG.md",
@@ -26,7 +30,7 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@safelytyped/core-types": "^0.1.0"
+    "@safelytyped/core-types": "^0.1.6"
   },
   "devDependencies": {
     "@types/chai": "^4.2.8",

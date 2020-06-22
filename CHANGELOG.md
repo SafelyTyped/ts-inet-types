@@ -25,5 +25,7 @@ The following changes have been completed, and will be included in the next tagg
 
 * IpPort
   - added `IpPort`
+  - added `MIN_IP_PORT`
+  - added `MAX_IP_PORT`
   - added `resolveIpPortToNumber()`
   - added `resolveIpPortToString()`

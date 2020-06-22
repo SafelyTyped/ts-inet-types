@@ -30,7 +30,7 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@safelytyped/core-types": "^0.1.6"
+    "@safelytyped/core-types": "^0.1.8"
   },
   "devDependencies": {
     "@types/chai": "^4.2.8",

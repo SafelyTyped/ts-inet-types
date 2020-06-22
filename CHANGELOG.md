@@ -21,12 +21,17 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.1.0
+
+Released Monday, 22nd June 2020.
+
 ### New
 
 * IpPort
   - added `IpPort`
   - added `MIN_IP_PORT`
   - added `MAX_IP_PORT`
+  - added `ValidateIpPortDataOptions`
   - added `isIpPort()`
   - added `makeIpPort()`
   - added `mustBeIpPort()`

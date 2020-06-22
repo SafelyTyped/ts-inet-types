@@ -40,6 +40,9 @@ import {
 
 import { IpPort } from "./IpPort";
 import { mustBeIpPort } from "./mustBeIpPort";
+import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
+import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
+import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `makeIpPort()` is a smart constructor. Use it to create an {@link IpPort}
@@ -52,13 +55,23 @@ import { mustBeIpPort } from "./mustBeIpPort";
  * {@link AppError} to explain why.
  * @param path
  * Where are you in the nested data structure you are creating?
+ * @param minInc
+ * The lowest number IP port that's acceptable. Defaults to
+ * {@link MIN_IP_PORT}. Override this if you are creating a refined type.
+ * @param maxInc
+ * The highest number IP port that's acceptable. Defaults to
+ * {@link MAX_IP_PORT}. Override this if you are creating a refined type.
  * @returns
  * - `input` converted to an `IpPort`
+ *
+ * @category IpPort
  */
 export const makeIpPort = (
     input: unknown,
     {
         onError = THROW_THE_ERROR,
-        path = DEFAULT_DATA_PATH
-    }: Partial<MakeNominalTypeOptions> = {}
-): IpPort => makeNominalType(mustBeIpPort, input, { onError, path })
+        path = DEFAULT_DATA_PATH,
+        minInc = MIN_IP_PORT,
+        maxInc = MAX_IP_PORT,
+    }: Partial<MakeNominalTypeOptions> & Partial<ValidateIpPortDataOptions> = {}
+): IpPort => makeNominalType(mustBeIpPort, input, { onError, path, minInc, maxInc })

@@ -33,8 +33,11 @@
 //
 import { AppError, DEFAULT_DATA_PATH } from "@safelytyped/core-types";
 
+import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
+import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
 import { IpPort } from "./IpPort";
 import { validateIpPortData } from "./validateIpPortData";
+import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `isIpPort()` is a type guard. Use it to prove that the given `input`
@@ -42,11 +45,25 @@ import { validateIpPortData } from "./validateIpPortData";
  *
  * @param input
  * the value to examime
+ * @param minInc
+ * The lowest number IP port that's acceptable. Defaults to
+ * {@link MIN_IP_PORT}. Override this if you are creating a refined type.
+ * @param maxInc
+ * The highest number IP port that's acceptable. Defaults to
+ * {@link MAX_IP_PORT}. Override this if you are creating a refined type.
  *
  * @category IpPort
  */
 export function isIpPort(
-    input: unknown
+    input: unknown,
+    {
+        minInc = MIN_IP_PORT,
+        maxInc = MAX_IP_PORT
+    }: Partial<ValidateIpPortDataOptions> = {}
 ): input is IpPort {
-    return !(validateIpPortData(DEFAULT_DATA_PATH, input) instanceof AppError);
+    return !(validateIpPortData(
+        DEFAULT_DATA_PATH,
+        input,
+        { minInc, maxInc }
+    ) instanceof AppError);
 }

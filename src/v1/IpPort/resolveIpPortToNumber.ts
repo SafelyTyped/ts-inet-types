@@ -44,6 +44,5 @@ export function resolveIpPortToNumber(input: IpPort): number {
         return input;
     }
 
-    const port = Number(input);
-    return Math.floor(port);
+    return Number(input);
 }

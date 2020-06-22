@@ -38,13 +38,12 @@ import {
     validate,
     validateInteger,
     validateNumberRange,
-    validateNumericalData,
-    recast,
 } from "@safelytyped/core-types";
 
-import { IpPort } from "./IpPort";
-import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
 import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
+import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
+import { IpPort } from "./IpPort";
+import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
 
 
 /**
@@ -83,7 +82,7 @@ function validateIpPortNumber(
     return validate(input)
         .next((x) => validateInteger(path, x))
         .next((x) => validateNumberRange(path, x, MIN_IP_PORT, MAX_IP_PORT))
-        .next((x) => recast<number, IpPort>(x))
+        .next(() => input as IpPort)
         .value();
 }
 
@@ -92,7 +91,7 @@ function validateIpPortString(
     input: string
 ): AppErrorOr<IpPort> {
     return validate(input)
-        .next((x) => validateNumericalData(path, x))
+        .next((x) => resolveIpPortToNumber(x as IpPort))
         .next((x) => validateIpPortNumber(path, x))
         .next(() => input as IpPort)
         .value();

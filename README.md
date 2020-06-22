@@ -22,6 +22,7 @@ __VS Code users:__ once you've added a single import anywhere in your project, y
 
 Looking for more detailed documentation? You'll find it under the [docs](./docs) folder.
 
+* [Our public library API](./docs/api/v1.md)
 * [Our CHANGELOG](CHANGELOG.md)
 * [Our software license](LICENSE.md)
 * [All contributors to date](AUTHORS.md)

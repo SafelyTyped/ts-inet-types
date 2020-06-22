@@ -38,26 +38,43 @@ import {
     TypeGuaranteeOptions,
 } from "@safelytyped/core-types";
 
+import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
+import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
 import { IpPort } from "./IpPort";
 import { validateIpPortData } from "./validateIpPortData";
+import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `mustBeIpPort()` is a type guarantee. Use it to guarantee that the
  * given `input` can be safely used as a {@link IpPort}.
  *
  * @param input
- * the value to examime
+ * The value to examine
+ * @param onError
+ * If `input` fails validation, we'll call your `onError` handler with an
+ * {@link AppError} to explain why.
+ * @param path
+ * Where are you in the nested data structure you are creating?
+ * @param minInc
+ * The lowest number IP port that's acceptable. Defaults to
+ * {@link MIN_IP_PORT}. Override this if you are creating a refined type.
+ * @param maxInc
+ * The highest number IP port that's acceptable. Defaults to
+ * {@link MAX_IP_PORT}. Override this if you are creating a refined type.
  *
  * @category IpPort
  */
 export function mustBeIpPort(
-    input: unknown, {
+    input: unknown,
+    {
         onError = THROW_THE_ERROR,
-        path = DEFAULT_DATA_PATH
-    }: Partial<TypeGuaranteeOptions> = {}
+        path = DEFAULT_DATA_PATH,
+        minInc = MIN_IP_PORT,
+        maxInc = MAX_IP_PORT,
+    }: Partial<TypeGuaranteeOptions> & Partial<ValidateIpPortDataOptions> = {}
 ): IpPort {
     // let's take a peek
-    const retval = validateIpPortData(path, input);
+    const retval = validateIpPortData(path, input, { minInc, maxInc });
 
     // did we like what we saw?
     if (retval instanceof AppError) {

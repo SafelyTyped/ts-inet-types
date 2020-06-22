@@ -32,13 +32,22 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./IpPort";
-export * from "./ValidateIpPortDataOptions";
-export * from "./constants/MAX_IP_PORT";
-export * from "./constants/MIN_IP_PORT";
-export * from "./isIpPort";
-export * from "./makeIpPort";
-export * from "./mustBeIpPort";
-export * from "./resolveIpPortToNumber";
-export * from "./resolveIpPortToString";
-export * from "./validateIpPortData";
+import { TypeGuaranteeOptions } from "@safelytyped/core-types";
+
+/**
+ * `IpPortValidationOptions` are the user-supplied options supported by
+ * {@link validateIpPortData}.
+ *
+ * @category IpPort
+ */
+export type ValidateIpPortDataOptions = TypeGuaranteeOptions & {
+    /**
+     * `minInc` is the lowest number that an IP port can be
+     */
+    minInc: number,
+
+    /**
+     * `maxInc` is the highest number that an IP port can be
+     */
+    maxInc: number
+}

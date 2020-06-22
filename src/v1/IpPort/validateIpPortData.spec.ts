@@ -157,4 +157,50 @@ describe("validateIpPortData()", () => {
             expect(actualValue).to.be.instanceOf(UnsupportedTypeError);
         });
     });
+
+    describe("user-supplied options", () => {
+        it("caller can override min port number (when input is a number)", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                100,
+                {
+                    minInc: 125
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
+        });
+
+        it("caller can override max port number (when input is a number>", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                125,
+                {
+                    maxInc: 100
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
+        });
+
+        it("caller can override min port number (when input is a string)", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                "100",
+                {
+                    minInc: 125
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
+        });
+
+        it("caller can override max port number (when input is a string>", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                "125",
+                {
+                    maxInc: 100
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
+        });
+    });
 });

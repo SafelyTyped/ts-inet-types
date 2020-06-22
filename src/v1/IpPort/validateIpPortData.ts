@@ -44,6 +44,7 @@ import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
 import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
 import { IpPort } from "./IpPort";
 import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
+import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `validateIpPortData()` is a data validator. Use it to prove that your
@@ -54,6 +55,12 @@ import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
  * Use {@link DEFAULT_DATA_PATH} if you're not in a nested data structure.
  * @param input
  * The value to validate.
+ * @param minInc
+ * The lowest number IP port that's acceptable. Defaults to
+ * {@link MIN_IP_PORT}. Override this if you are creating a refined type.
+ * @param maxInc
+ * The highest number IP port that's acceptable. Defaults to
+ * {@link MAX_IP_PORT}. Override this if you are creating a refined type.
  * @returns
  * - `input`, type-cast to be an {@link IpPort}, on success, or
  * - an AppError explaining why validation failed
@@ -62,15 +69,19 @@ import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
  */
 export function validateIpPortData(
     path: DataPath,
-    input: number | string | unknown
+    input: number | string | unknown,
+    {
+        minInc = MIN_IP_PORT,
+        maxInc = MAX_IP_PORT
+    }: Partial<ValidateIpPortDataOptions> = {}
 ): AppErrorOr<IpPort> {
     // not worth using a function pointer table here,
     // because there's only 3 options
     switch (typeof input) {
         case "number":
-            return validateIpPortNumber(path, input);
+            return validateIpPortNumber(path, input, minInc, maxInc);
         case "string":
-            return validateIpPortString(path, input);
+            return validateIpPortString(path, input, minInc, maxInc);
         default:
             return new UnsupportedTypeError({
                 public: {
@@ -84,22 +95,26 @@ export function validateIpPortData(
 
 function validateIpPortNumber(
     path: DataPath,
-    input: number
+    input: number,
+    minInc: number,
+    maxInc: number,
 ): AppErrorOr<IpPort> {
     return validate(input)
         .next((x) => validateInteger(path, x))
-        .next((x) => validateNumberRange(path, x, MIN_IP_PORT, MAX_IP_PORT))
+        .next((x) => validateNumberRange(path, x, minInc, maxInc))
         .next(() => input as IpPort)
         .value();
 }
 
 function validateIpPortString(
     path: DataPath,
-    input: string
+    input: string,
+    minInc: number,
+    maxInc: number,
 ): AppErrorOr<IpPort> {
     return validate(input)
         .next((x) => resolveIpPortToNumber(x as IpPort))
-        .next((x) => validateIpPortNumber(path, x))
+        .next((x) => validateIpPortNumber(path, x, minInc, maxInc))
         .next(() => input as IpPort)
         .value();
 }

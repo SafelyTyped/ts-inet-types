@@ -31,6 +31,7 @@ Released Monday, 22nd June 2020.
   - added `IpPort`
   - added `MIN_IP_PORT`
   - added `MAX_IP_PORT`
+  - added `ValidateIpPortDataOptions`
   - added `isIpPort()`
   - added `makeIpPort()`
   - added `mustBeIpPort()`

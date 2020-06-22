@@ -31,18 +31,47 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import {
+    DEFAULT_DATA_PATH,
+    makeNominalType,
+    MakeNominalTypeOptions,
+    THROW_THE_ERROR,
+} from "@safelytyped/core-types";
+
 import { IpPort } from "./IpPort";
+import { mustBeIpPort } from "./mustBeIpPort";
+import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
+import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
+import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
- * `resolveIpPortToString()` converts an {@link IpPort} option type
- * to be a valid string.
+ * `makeIpPort()` is a smart constructor. Use it to create an {@link IpPort}
+ * type from a `string` or `number`.
+ *
+ * @param input
+ * The number of the port you want to use.
+ * @param onError
+ * If `input` fails validation, we'll call your `onError` handler with an
+ * {@link AppError} to explain why.
+ * @param path
+ * Where are you in the nested data structure you are creating?
+ * @param minInc
+ * The lowest number IP port that's acceptable. Defaults to
+ * {@link MIN_IP_PORT}. Override this if you are creating a refined type.
+ * @param maxInc
+ * The highest number IP port that's acceptable. Defaults to
+ * {@link MAX_IP_PORT}. Override this if you are creating a refined type.
+ * @returns
+ * - `input` converted to an `IpPort`
  *
  * @category IpPort
  */
-export function resolveIpPortToString(input: IpPort): string {
-    if (typeof input === "string") {
-        return input;
-    }
-
-    return input.toString();
-}
+export const makeIpPort = (
+    input: unknown,
+    {
+        onError = THROW_THE_ERROR,
+        path = DEFAULT_DATA_PATH,
+        minInc = MIN_IP_PORT,
+        maxInc = MAX_IP_PORT,
+    }: Partial<MakeNominalTypeOptions> & Partial<ValidateIpPortDataOptions> = {}
+): IpPort => makeNominalType(mustBeIpPort, input, { onError, path, minInc, maxInc })

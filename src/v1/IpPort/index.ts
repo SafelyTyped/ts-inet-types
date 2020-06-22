@@ -31,18 +31,14 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { IpPort } from "./IpPort";
 
-/**
- * `resolveIpPortToString()` converts an {@link IpPort} option type
- * to be a valid string.
- *
- * @category IpPort
- */
-export function resolveIpPortToString(input: IpPort): string {
-    if (typeof input === "string") {
-        return input;
-    }
-
-    return input.toString();
-}
+export * from "./IpPort";
+export * from "./ValidateIpPortDataOptions";
+export * from "./constants/MAX_IP_PORT";
+export * from "./constants/MIN_IP_PORT";
+export * from "./isIpPort";
+export * from "./makeIpPort";
+export * from "./mustBeIpPort";
+export * from "./resolveIpPortToNumber";
+export * from "./resolveIpPortToString";
+export * from "./validateIpPortData";

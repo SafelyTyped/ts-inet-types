@@ -31,18 +31,5 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { IpPort } from "./IpPort";
 
-/**
- * `resolveIpPortToString()` converts an {@link IpPort} option type
- * to be a valid string.
- *
- * @category IpPort
- */
-export function resolveIpPortToString(input: IpPort): string {
-    if (typeof input === "string") {
-        return input;
-    }
-
-    return input.toString();
-}
+export const MIN_IP_PORT = 0;

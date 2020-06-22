@@ -31,18 +31,23 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { IpPort } from "./IpPort";
+
+import { TypeGuaranteeOptions } from "@safelytyped/core-types";
 
 /**
- * `resolveIpPortToString()` converts an {@link IpPort} option type
- * to be a valid string.
+ * `IpPortValidationOptions` are the user-supplied options supported by
+ * {@link validateIpPortData}.
  *
  * @category IpPort
  */
-export function resolveIpPortToString(input: IpPort): string {
-    if (typeof input === "string") {
-        return input;
-    }
+export type ValidateIpPortDataOptions = TypeGuaranteeOptions & {
+    /**
+     * `minInc` is the lowest number that an IP port can be
+     */
+    minInc: number,
 
-    return input.toString();
+    /**
+     * `maxInc` is the highest number that an IP port can be
+     */
+    maxInc: number
 }

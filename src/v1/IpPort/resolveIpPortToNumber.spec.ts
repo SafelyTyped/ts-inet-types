@@ -34,20 +34,21 @@
 import { describe } from "mocha";
 import { expect } from "chai";
 import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
+import { IpPort } from "./IpPort";
 
 describe("resolveIpPortToNumber()", () => {
     describe("when IpPort is a number", () => {
         [
             {
-                input: 0,
+                input: 0 as IpPort,
                 expected: 0,
             },
             {
-                input: 80,
+                input: 80 as IpPort,
                 expected: 80,
             },
             {
-                input: 65535,
+                input: 65535 as IpPort,
                 expected: 65535,
             },
         ].forEach((example) => {
@@ -65,15 +66,15 @@ describe("resolveIpPortToNumber()", () => {
     describe("when IpPort is a string", () => {
         [
             {
-                input: "0",
+                input: "0" as IpPort,
                 expected: 0,
             },
             {
-                input: "80",
+                input: "80" as IpPort,
                 expected: 80,
             },
             {
-                input: "65535",
+                input: "65535" as IpPort,
                 expected: 65535,
             },
         ].forEach((example) => {

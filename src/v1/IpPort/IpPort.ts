@@ -32,9 +32,11 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
+import { Branded } from "@safelytyped/core-types";
+
 /**
  * `IpPort` represents the port number of an IP address.
  *
  * @category IpPort
  */
-export type IpPort = string|number;
+export type IpPort = Branded<string|number, "@safelytyped/ip-port/ip-port">;

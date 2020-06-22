@@ -39,10 +39,11 @@ import { IpPort } from "./IpPort";
  *
  * @category IpPort
  */
-export function resolveIpPortToNumber(port: IpPort): number {
-    if (typeof port === "string") {
-        port = Number(port);
+export function resolveIpPortToNumber(input: IpPort): number {
+    if (typeof input === "number") {
+        return input;
     }
 
+    const port = Number(input);
     return Math.floor(port);
 }

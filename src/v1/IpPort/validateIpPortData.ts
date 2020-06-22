@@ -39,6 +39,7 @@ import {
     validateInteger,
     validateNumberRange,
     validateNumericalData,
+    recast,
 } from "@safelytyped/core-types";
 
 import { IpPort } from "./IpPort";
@@ -82,6 +83,7 @@ function validateIpPortNumber(
     return validate(input)
         .next((x) => validateInteger(path, x))
         .next((x) => validateNumberRange(path, x, MIN_IP_PORT, MAX_IP_PORT))
+        .next((x) => recast<number, IpPort>(x))
         .value();
 }
 
@@ -92,6 +94,6 @@ function validateIpPortString(
     return validate(input)
         .next((x) => validateNumericalData(path, x))
         .next((x) => validateIpPortNumber(path, x))
-        .next(() => input)
+        .next(() => input as IpPort)
         .value();
 }

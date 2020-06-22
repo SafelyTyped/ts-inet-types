@@ -54,6 +54,8 @@ import { mustBeIpPort } from "./mustBeIpPort";
  * Where are you in the nested data structure you are creating?
  * @returns
  * - `input` converted to an `IpPort`
+ *
+ * @category IpPort
  */
 export const makeIpPort = (
     input: unknown,

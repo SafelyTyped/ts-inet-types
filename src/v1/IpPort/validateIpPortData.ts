@@ -45,13 +45,20 @@ import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
 import { IpPort } from "./IpPort";
 import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
 
-
 /**
  * `validateIpPortData()` is a data validator. Use it to prove that your
  * input value can be used as an IP port.
  *
  * @param path
+ * where are you in the nested data structure that you're validating?
+ * Use {@link DEFAULT_DATA_PATH} if you're not in a nested data structure.
  * @param input
+ * The value to validate.
+ * @returns
+ * - `input`, type-cast to be an {@link IpPort}, on success, or
+ * - an AppError explaining why validation failed
+ *
+ * @category IpPort
  */
 export function validateIpPortData(
     path: DataPath,

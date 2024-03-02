@@ -6,11 +6,11 @@
         "moduleResolution": "node",
         "strict": true,
         "alwaysStrict": true,
-        // "esModuleInterop": true,
+        "esModuleInterop": true,
         "skipLibCheck": false,
         "forceConsistentCasingInFileNames": true,
-        "verbatimModuleSyntax": true,
         "isolatedModules": true,
+        "verbatimModuleSyntax": true,
 
         "declaration": true,                      /* Generates corresponding '.d.ts' file. */
         "declarationMap": true,                   /* Generates a sourcemap for each corresponding '.d.ts' file. */
@@ -38,6 +38,7 @@
     "ts-node": {
         "swc": true,
         "esm": true,
-        "require": ["tsconfig-paths/register"]
+        "require": ["tsconfig-paths/register"],
+        "transpileOnly": true,
     }
 }

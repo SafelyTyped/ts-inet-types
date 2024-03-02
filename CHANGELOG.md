@@ -31,6 +31,10 @@ The following changes have been completed, and will be included in the next tagg
 * Switch from tslint to @typescript-eslint
   * Lots of tweaks to satisfy @typescript-eslint
 
+### Tests
+
+* All tests now import from `@safelytyped/ip-port` to test that our exports work
+
 ## v0.1.1
 
 Released Wednesday, 26th May 2021.

@@ -34,10 +34,7 @@
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
-import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { isIpPort } from "./isIpPort";
-
+import { MAX_IP_PORT, MIN_IP_PORT, isIpPort } from "@safelytyped/ip-port";
 
 describe("isIpPort()", () => {
     describe("with numbers", () => {

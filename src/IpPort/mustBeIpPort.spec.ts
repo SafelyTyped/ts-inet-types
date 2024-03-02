@@ -35,10 +35,9 @@ import { AppErrorOr, NumberOutOfRangeError, UnsupportedTypeError } from "@safely
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
-import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { mustBeIpPort } from "./mustBeIpPort";
-
+import { MAX_IP_PORT } from "@safelytyped/ip-port";
+import { MIN_IP_PORT } from "@safelytyped/ip-port";
+import { mustBeIpPort } from "@safelytyped/ip-port";
 
 describe("mustBeIpPort()", () => {
     describe("with numbers", () => {

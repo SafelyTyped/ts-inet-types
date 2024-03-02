@@ -33,8 +33,8 @@
 //
 import { describe } from "mocha";
 import { expect } from "chai";
-import { resolveIpPortToString } from "./resolveIpPortToString";
-import { IpPort } from "./IpPort";
+import { resolveIpPortToString } from "@safelytyped/ip-port";
+import { IpPort } from "@safelytyped/ip-port";
 
 describe("resolveIpPortToString()", () => {
     describe("when IpPort is a number", () => {

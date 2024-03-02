@@ -34,9 +34,9 @@
 
 import { describe } from "mocha";
 import { expect } from "chai";
-import { validateIpPortData } from "./validateIpPortData";
-import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
+import { validateIpPortData } from "@safelytyped/ip-port";
+import { MIN_IP_PORT } from "@safelytyped/ip-port";
+import { MAX_IP_PORT } from "@safelytyped/ip-port";
 import { DEFAULT_DATA_PATH, UnsupportedTypeError, NumberOutOfRangeError } from "@safelytyped/core-types";
 
 describe("validateIpPortData()", () => {

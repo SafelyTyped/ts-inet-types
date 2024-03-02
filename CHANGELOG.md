@@ -21,6 +21,24 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.2.0
+
+Released Saturday, 2nd March 2024.
+
+### Fixes
+
+- add simultaneous support for CommonJS and ESM modules
+
+### B/C Breaks
+
+* Upgrade to Typescript 5.2
+* Switch from tslint to @typescript-eslint
+  * Lots of tweaks to satisfy @typescript-eslint
+
+### Tests
+
+* All tests now import from `@safelytyped/ip-port` to test that our exports work
+
 ## v0.1.1
 
 Released Wednesday, 26th May 2021.

@@ -31,20 +31,22 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { AppErrorOr, NumberOutOfRangeError, UnsupportedTypeError } from "@safelytyped/core-types";
-import { expect } from "chai";
+
 import { describe } from "mocha";
+import { expect } from "chai";
+import { validateIpPortData } from "@safelytyped/ip-port";
+import { MIN_IP_PORT } from "@safelytyped/ip-port";
+import { MAX_IP_PORT } from "@safelytyped/ip-port";
+import { DEFAULT_DATA_PATH, UnsupportedTypeError, NumberOutOfRangeError } from "@safelytyped/core-types";
 
-import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
-import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { mustBeIpPort } from "./mustBeIpPort";
-
-
-describe("mustBeIpPort()", () => {
+describe("validateIpPortData()", () => {
     describe("with numbers", () => {
         it("accepts integers between " + MIN_IP_PORT + " and " + MAX_IP_PORT + " inclusive", () => {
             for(let i = MIN_IP_PORT; i <= MAX_IP_PORT; i++) {
-                const actualValue = mustBeIpPort(i);
+                const actualValue = validateIpPortData(
+                    DEFAULT_DATA_PATH,
+                    i
+                );
                 expect(actualValue).to.equal(
                     i,
                     "rejected input value " + JSON.stringify(i)
@@ -54,12 +56,10 @@ describe("mustBeIpPort()", () => {
 
         it("rejects integers below 0", () => {
             for(let i = MIN_IP_PORT - 100; i < MIN_IP_PORT; i++) {
-                let actualValue: AppErrorOr<any> = false;
-                try {
-                    actualValue = mustBeIpPort(i);
-                } catch(e) {
-                    actualValue = e;
-                }
+                const actualValue = validateIpPortData(
+                    DEFAULT_DATA_PATH,
+                    i
+                );
                 expect(actualValue).to.be.instanceOf(
                     NumberOutOfRangeError,
                     "did not reject input value " + JSON.stringify(i)
@@ -69,12 +69,10 @@ describe("mustBeIpPort()", () => {
 
         it("rejects integers above 65535", () => {
             for(let i = MAX_IP_PORT + 1; i < MAX_IP_PORT + 100; i++) {
-                let actualValue: AppErrorOr<any> = false;
-                try {
-                    actualValue = mustBeIpPort(i);
-                } catch(e) {
-                    actualValue = e;
-                }
+                const actualValue = validateIpPortData(
+                    DEFAULT_DATA_PATH,
+                    i
+                );
                 expect(actualValue).to.be.instanceOf(
                     NumberOutOfRangeError,
                     "did not reject input value " + JSON.stringify(i)
@@ -83,14 +81,12 @@ describe("mustBeIpPort()", () => {
         });
 
         it("rejects non-integers", () => {
-            let actualValue: AppErrorOr<any> = false;
-            try {
-                actualValue = mustBeIpPort(MIN_IP_PORT + 1.5);
-            } catch(e) {
-                actualValue = e;
-            }
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                MIN_IP_PORT + 1.5
+            );
             expect(actualValue).to.be.instanceOf(
-                UnsupportedTypeError,
+                UnsupportedTypeError
             );
         });
     });
@@ -100,7 +96,10 @@ describe("mustBeIpPort()", () => {
             for(let i = MIN_IP_PORT; i <= MAX_IP_PORT; i++) {
                 const inputValue = i.toString();
 
-                const actualValue = mustBeIpPort(inputValue);
+                const actualValue = validateIpPortData(
+                    DEFAULT_DATA_PATH,
+                    inputValue
+                );
                 expect(actualValue).to.equal(
                     inputValue,
                     "rejected input value " + JSON.stringify(inputValue)
@@ -112,12 +111,10 @@ describe("mustBeIpPort()", () => {
             for(let i = MIN_IP_PORT - 100; i < MIN_IP_PORT; i++) {
                 const inputValue = i.toString();
 
-                let actualValue: AppErrorOr<any> = false;
-                try {
-                    actualValue = mustBeIpPort(inputValue);
-                } catch(e) {
-                    actualValue = e;
-                }
+                const actualValue = validateIpPortData(
+                    DEFAULT_DATA_PATH,
+                    inputValue
+                );
                 expect(actualValue).to.be.instanceOf(
                     NumberOutOfRangeError,
                     "did not reject input value " + JSON.stringify(inputValue)
@@ -129,12 +126,10 @@ describe("mustBeIpPort()", () => {
             for(let i = MAX_IP_PORT + 1; i < MAX_IP_PORT + 100; i++) {
                 const inputValue = i.toString();
 
-                let actualValue: AppErrorOr<any> = false;
-                try {
-                    actualValue = mustBeIpPort(inputValue);
-                } catch(e) {
-                    actualValue = e;
-                }
+                const actualValue = validateIpPortData(
+                    DEFAULT_DATA_PATH,
+                    inputValue
+                );
                 expect(actualValue).to.be.instanceOf(
                     NumberOutOfRangeError,
                     "did not reject input value " + JSON.stringify(inputValue)
@@ -143,31 +138,69 @@ describe("mustBeIpPort()", () => {
         });
 
         it("rejects non-integers", () => {
-            let actualValue: AppErrorOr<any> = false;
-            try {
-                actualValue = mustBeIpPort(
-                    (MIN_IP_PORT + 1.5).toString()
-                );
-            } catch(e) {
-                actualValue = e;
-            }
-
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                (MIN_IP_PORT + 1.5).toString()
+            );
             expect(actualValue).to.be.instanceOf(
-                UnsupportedTypeError,
+                UnsupportedTypeError
             );
         });
     });
 
     describe("other input types are rejected", () => {
         it("rejects other input types", () => {
-            let actualValue: AppErrorOr<any> = false;
-            try {
-                actualValue = mustBeIpPort(null);
-            } catch(e) {
-                actualValue = e;
-            }
-
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                null
+            );
             expect(actualValue).to.be.instanceOf(UnsupportedTypeError);
+        });
+    });
+
+    describe("user-supplied options", () => {
+        it("caller can override min port number (when input is a number)", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                100,
+                {
+                    minInc: 125
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
+        });
+
+        it("caller can override max port number (when input is a number>", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                125,
+                {
+                    maxInc: 100
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
+        });
+
+        it("caller can override min port number (when input is a string)", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                "100",
+                {
+                    minInc: 125
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
+        });
+
+        it("caller can override max port number (when input is a string>", () => {
+            const actualValue = validateIpPortData(
+                DEFAULT_DATA_PATH,
+                "125",
+                {
+                    maxInc: 100
+                }
+            );
+            expect(actualValue).to.be.instanceOf(NumberOutOfRangeError);
         });
     });
 });

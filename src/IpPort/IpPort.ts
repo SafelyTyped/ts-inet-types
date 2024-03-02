@@ -31,18 +31,12 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { IpPort } from "./IpPort";
+
+import type { Branded } from "@safelytyped/core-types";
 
 /**
- * `resolveIpPortToNumber() converts an {@link IpPort} option type
- * to be a valid integer number.
+ * `IpPort` represents the port number of an IP address.
  *
  * @category IpPort
  */
-export function resolveIpPortToNumber(input: IpPort): number {
-    if (typeof input === "number") {
-        return input;
-    }
-
-    return Number(input);
-}
+export type IpPort = Branded<string|number, "@safelytyped/ip-port/IpPort">;

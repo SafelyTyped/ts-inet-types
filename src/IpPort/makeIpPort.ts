@@ -34,15 +34,15 @@
 import {
     DEFAULT_DATA_PATH,
     makeNominalType,
-    MakeNominalTypeOptions,
+    type MakeNominalTypeOptions,
     THROW_THE_ERROR,
 } from "@safelytyped/core-types";
 
-import { IpPort } from "./IpPort";
+import type { IpPort } from "./IpPort";
 import { mustBeIpPort } from "./mustBeIpPort";
 import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
 import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
-import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
+import type { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `makeIpPort()` is a smart constructor. Use it to create an {@link IpPort}
@@ -74,4 +74,4 @@ export const makeIpPort = (
         minInc = MIN_IP_PORT,
         maxInc = MAX_IP_PORT,
     }: Partial<MakeNominalTypeOptions> & Partial<ValidateIpPortDataOptions> = {}
-): IpPort => makeNominalType(mustBeIpPort, input, { onError, path, minInc, maxInc })
+): IpPort => makeNominalType(mustBeIpPort, input, { onError, path, minInc, maxInc });

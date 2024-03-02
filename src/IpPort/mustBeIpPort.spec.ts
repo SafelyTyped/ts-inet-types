@@ -35,16 +35,15 @@ import { AppErrorOr, NumberOutOfRangeError, UnsupportedTypeError } from "@safely
 import { expect } from "chai";
 import { describe } from "mocha";
 
-import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
-import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { makeIpPort } from "./makeIpPort";
+import { MAX_IP_PORT } from "@safelytyped/ip-port";
+import { MIN_IP_PORT } from "@safelytyped/ip-port";
+import { mustBeIpPort } from "@safelytyped/ip-port";
 
-
-describe("makeIpPort()", () => {
+describe("mustBeIpPort()", () => {
     describe("with numbers", () => {
         it("accepts integers between " + MIN_IP_PORT + " and " + MAX_IP_PORT + " inclusive", () => {
             for(let i = MIN_IP_PORT; i <= MAX_IP_PORT; i++) {
-                const actualValue = makeIpPort(i);
+                const actualValue = mustBeIpPort(i);
                 expect(actualValue).to.equal(
                     i,
                     "rejected input value " + JSON.stringify(i)
@@ -56,7 +55,7 @@ describe("makeIpPort()", () => {
             for(let i = MIN_IP_PORT - 100; i < MIN_IP_PORT; i++) {
                 let actualValue: AppErrorOr<any> = false;
                 try {
-                    actualValue = makeIpPort(i);
+                    actualValue = mustBeIpPort(i);
                 } catch(e) {
                     actualValue = e;
                 }
@@ -71,7 +70,7 @@ describe("makeIpPort()", () => {
             for(let i = MAX_IP_PORT + 1; i < MAX_IP_PORT + 100; i++) {
                 let actualValue: AppErrorOr<any> = false;
                 try {
-                    actualValue = makeIpPort(i);
+                    actualValue = mustBeIpPort(i);
                 } catch(e) {
                     actualValue = e;
                 }
@@ -85,7 +84,7 @@ describe("makeIpPort()", () => {
         it("rejects non-integers", () => {
             let actualValue: AppErrorOr<any> = false;
             try {
-                actualValue = makeIpPort(MIN_IP_PORT + 1.5);
+                actualValue = mustBeIpPort(MIN_IP_PORT + 1.5);
             } catch(e) {
                 actualValue = e;
             }
@@ -100,7 +99,7 @@ describe("makeIpPort()", () => {
             for(let i = MIN_IP_PORT; i <= MAX_IP_PORT; i++) {
                 const inputValue = i.toString();
 
-                const actualValue = makeIpPort(inputValue);
+                const actualValue = mustBeIpPort(inputValue);
                 expect(actualValue).to.equal(
                     inputValue,
                     "rejected input value " + JSON.stringify(inputValue)
@@ -114,7 +113,7 @@ describe("makeIpPort()", () => {
 
                 let actualValue: AppErrorOr<any> = false;
                 try {
-                    actualValue = makeIpPort(inputValue);
+                    actualValue = mustBeIpPort(inputValue);
                 } catch(e) {
                     actualValue = e;
                 }
@@ -131,7 +130,7 @@ describe("makeIpPort()", () => {
 
                 let actualValue: AppErrorOr<any> = false;
                 try {
-                    actualValue = makeIpPort(inputValue);
+                    actualValue = mustBeIpPort(inputValue);
                 } catch(e) {
                     actualValue = e;
                 }
@@ -145,7 +144,7 @@ describe("makeIpPort()", () => {
         it("rejects non-integers", () => {
             let actualValue: AppErrorOr<any> = false;
             try {
-                actualValue = makeIpPort(
+                actualValue = mustBeIpPort(
                     (MIN_IP_PORT + 1.5).toString()
                 );
             } catch(e) {
@@ -162,7 +161,7 @@ describe("makeIpPort()", () => {
         it("rejects other input types", () => {
             let actualValue: AppErrorOr<any> = false;
             try {
-                actualValue = makeIpPort(null);
+                actualValue = mustBeIpPort(null);
             } catch(e) {
                 actualValue = e;
             }

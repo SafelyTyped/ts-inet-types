@@ -31,39 +31,90 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { AppError, DEFAULT_DATA_PATH } from "@safelytyped/core-types";
+import {
+    type AppErrorOr,
+    type DataPath,
+    UnsupportedTypeError,
+    validate,
+    validateInteger,
+    validateNumberRange,
+} from "@safelytyped/core-types";
 
 import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
 import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { IpPort } from "./IpPort";
-import { validateIpPortData } from "./validateIpPortData";
-import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
+import type { IpPort } from "./IpPort";
+import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
+import type { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
- * `isIpPort()` is a type guard. Use it to prove that the given `input`
- * can be safely used as a {@link IpPort}.
+ * `validateIpPortData()` is a data validator. Use it to prove that your
+ * input value can be used as an IP port.
  *
+ * @param path
+ * where are you in the nested data structure that you're validating?
+ * Use {@link DEFAULT_DATA_PATH} if you're not in a nested data structure.
  * @param input
- * the value to examime
+ * The value to validate.
  * @param minInc
  * The lowest number IP port that's acceptable. Defaults to
  * {@link MIN_IP_PORT}. Override this if you are creating a refined type.
  * @param maxInc
  * The highest number IP port that's acceptable. Defaults to
  * {@link MAX_IP_PORT}. Override this if you are creating a refined type.
+ * @returns
+ * - `input`, type-cast to be an {@link IpPort}, on success, or
+ * - an AppError explaining why validation failed
  *
  * @category IpPort
  */
-export function isIpPort(
+export function validateIpPortData(
+    path: DataPath,
     input: unknown,
     {
         minInc = MIN_IP_PORT,
         maxInc = MAX_IP_PORT
     }: Partial<ValidateIpPortDataOptions> = {}
-): input is IpPort {
-    return !(validateIpPortData(
-        DEFAULT_DATA_PATH,
-        input,
-        { minInc, maxInc }
-    ) instanceof AppError);
+): AppErrorOr<IpPort> {
+    // not worth using a function pointer table here,
+    // because there's only 3 options
+    switch (typeof input) {
+        case "number":
+            return validateIpPortNumber(path, input, minInc, maxInc);
+        case "string":
+            return validateIpPortString(path, input, minInc, maxInc);
+        default:
+            return new UnsupportedTypeError({
+                public: {
+                    dataPath: path,
+                    expected: "string|number",
+                    actual: typeof input
+                }
+            });
+    }
+}
+
+function validateIpPortNumber(
+    path: DataPath,
+    input: number,
+    minInc: number,
+    maxInc: number,
+): AppErrorOr<IpPort> {
+    return validate(input)
+        .next((x) => validateInteger(x, { path }))
+        .next((x) => validateNumberRange(x, minInc, maxInc, { path }))
+        .next(() => input as IpPort)
+        .value();
+}
+
+function validateIpPortString(
+    path: DataPath,
+    input: string,
+    minInc: number,
+    maxInc: number,
+): AppErrorOr<IpPort> {
+    return validate(input)
+        .next((x) => resolveIpPortToNumber(x as IpPort))
+        .next((x) => validateIpPortNumber(path, x, minInc, maxInc))
+        .next(() => input as IpPort)
+        .value();
 }

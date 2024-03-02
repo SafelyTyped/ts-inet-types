@@ -33,23 +33,23 @@
 //
 import { describe } from "mocha";
 import { expect } from "chai";
-import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
-import { IpPort } from "./IpPort";
+import { resolveIpPortToString } from "@safelytyped/ip-port";
+import { IpPort } from "@safelytyped/ip-port";
 
-describe("resolveIpPortToNumber()", () => {
+describe("resolveIpPortToString()", () => {
     describe("when IpPort is a number", () => {
         [
             {
                 input: 0 as IpPort,
-                expected: 0,
+                expected: "0",
             },
             {
                 input: 80 as IpPort,
-                expected: 80,
+                expected: "80",
             },
             {
                 input: 65535 as IpPort,
-                expected: 65535,
+                expected: "65535",
             },
         ].forEach((example) => {
             // shorthand
@@ -57,7 +57,7 @@ describe("resolveIpPortToNumber()", () => {
             const expectedValue = example.expected;
 
             it("resolves " + inputValue + " to " + expectedValue, () => {
-                const actualValue = resolveIpPortToNumber(inputValue);
+                const actualValue = resolveIpPortToString(inputValue);
                 expect(actualValue).to.equal(expectedValue);
             });
         });
@@ -67,15 +67,15 @@ describe("resolveIpPortToNumber()", () => {
         [
             {
                 input: "0" as IpPort,
-                expected: 0,
+                expected: "0",
             },
             {
                 input: "80" as IpPort,
-                expected: 80,
+                expected: "80",
             },
             {
                 input: "65535" as IpPort,
-                expected: 65535,
+                expected: "65535",
             },
         ].forEach((example) => {
             // shorthand
@@ -83,7 +83,7 @@ describe("resolveIpPortToNumber()", () => {
             const expectedValue = example.expected;
 
             it("resolves " + JSON.stringify(inputValue) + " to " + expectedValue, () => {
-                const actualValue = resolveIpPortToNumber(inputValue);
+                const actualValue = resolveIpPortToString(inputValue);
                 expect(actualValue).to.equal(expectedValue);
             });
         });

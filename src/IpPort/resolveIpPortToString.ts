@@ -31,12 +31,18 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-
-import { Branded } from "@safelytyped/core-types";
+import type { IpPort } from "./IpPort";
 
 /**
- * `IpPort` represents the port number of an IP address.
+ * `resolveIpPortToString()` converts an {@link IpPort} option type
+ * to be a valid string.
  *
  * @category IpPort
  */
-export type IpPort = Branded<string|number, "@safelytyped/ip-port/ip-port">;
+export function resolveIpPortToString(input: IpPort): string {
+    if (typeof input === "string") {
+        return input;
+    }
+
+    return input.toString();
+}

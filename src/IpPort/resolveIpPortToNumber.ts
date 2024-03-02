@@ -31,18 +31,18 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { IpPort } from "./IpPort";
+import type { IpPort } from "./IpPort";
 
 /**
- * `resolveIpPortToString()` converts an {@link IpPort} option type
- * to be a valid string.
+ * `resolveIpPortToNumber() converts an {@link IpPort} option type
+ * to be a valid integer number.
  *
  * @category IpPort
  */
-export function resolveIpPortToString(input: IpPort): string {
-    if (typeof input === "string") {
+export function resolveIpPortToNumber(input: IpPort): number {
+    if (typeof input === "number") {
         return input;
     }
 
-    return input.toString();
+    return Number(input);
 }

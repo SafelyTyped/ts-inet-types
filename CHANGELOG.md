@@ -21,6 +21,12 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+### B/C Breaks
+
+* Upgrade to Typescript 5.2
+* Switch from tslint to @typescript-eslint
+  * Lots of tweaks to satisfy @typescript-eslint
+
 ## v0.1.1
 
 Released Wednesday, 26th May 2021.

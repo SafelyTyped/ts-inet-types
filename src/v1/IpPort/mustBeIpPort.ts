@@ -35,14 +35,14 @@ import {
     AppError,
     DEFAULT_DATA_PATH,
     THROW_THE_ERROR,
-    TypeGuaranteeOptions,
+    type TypeGuaranteeOptions,
 } from "@safelytyped/core-types";
 
 import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
 import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { IpPort } from "./IpPort";
+import type { IpPort } from "./IpPort";
 import { validateIpPortData } from "./validateIpPortData";
-import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
+import type { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `mustBeIpPort()` is a type guarantee. Use it to guarantee that the
@@ -82,5 +82,5 @@ export function mustBeIpPort(
     }
 
     // yes we did!
-    return retval as IpPort;
+    return retval;
 }

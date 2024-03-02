@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-import { TypeGuaranteeOptions } from "@safelytyped/core-types";
+import type { TypeGuaranteeOptions } from "@safelytyped/core-types";
 
 /**
  * `IpPortValidationOptions` are the user-supplied options supported by

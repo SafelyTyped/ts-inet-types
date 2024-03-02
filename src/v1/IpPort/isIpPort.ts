@@ -35,9 +35,9 @@ import { AppError, DEFAULT_DATA_PATH } from "@safelytyped/core-types";
 
 import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
 import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { IpPort } from "./IpPort";
+import type { IpPort } from "./IpPort";
 import { validateIpPortData } from "./validateIpPortData";
-import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
+import type { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `isIpPort()` is a type guard. Use it to prove that the given `input`

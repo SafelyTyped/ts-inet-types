@@ -32,8 +32,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import {
-    AppErrorOr,
-    DataPath,
+    type AppErrorOr,
+    type DataPath,
     UnsupportedTypeError,
     validate,
     validateInteger,
@@ -42,9 +42,9 @@ import {
 
 import { MAX_IP_PORT } from "./constants/MAX_IP_PORT";
 import { MIN_IP_PORT } from "./constants/MIN_IP_PORT";
-import { IpPort } from "./IpPort";
+import type { IpPort } from "./IpPort";
 import { resolveIpPortToNumber } from "./resolveIpPortToNumber";
-import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
+import type { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
 
 /**
  * `validateIpPortData()` is a data validator. Use it to prove that your
@@ -69,7 +69,7 @@ import { ValidateIpPortDataOptions } from "./ValidateIpPortDataOptions";
  */
 export function validateIpPortData(
     path: DataPath,
-    input: number | string | unknown,
+    input: unknown,
     {
         minInc = MIN_IP_PORT,
         maxInc = MAX_IP_PORT
@@ -100,8 +100,8 @@ function validateIpPortNumber(
     maxInc: number,
 ): AppErrorOr<IpPort> {
     return validate(input)
-        .next((x) => validateInteger(path, x))
-        .next((x) => validateNumberRange(path, x, minInc, maxInc))
+        .next((x) => validateInteger(x, { path }))
+        .next((x) => validateNumberRange(x, minInc, maxInc, { path }))
         .next(() => input as IpPort)
         .value();
 }

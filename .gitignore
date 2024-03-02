@@ -7,4 +7,5 @@ src/**/*.d.ts
 src/**/*.map
 lib
 node_modules
+reference-docs
 tmp
